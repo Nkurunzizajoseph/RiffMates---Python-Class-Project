@@ -1,31 +1,25 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ musician.first_name }} {{ musician.last_name }} | RiffMates{% endblock %}
+{% block title %}Welcome | RiffMates{% endblock %}
 
 {% block content %}
-<div class="welcome-section">
-    <div>
-      <h1 class="display-4 fw-bold">🎸 Welcome to Riffmates News</h1>
-      <p class="lead mt-3">
-        Dive into the rhythm of real stories, breaking updates, and music that
-        speaks. This is where riffs meet reality.
-      </p>
-      <a href="{% url 'news' %}" class="btn btn-outline-light btn-lg mt-4">
-        Start Reading
-      </a>
-    </div>
-  </div>
-  <style>
-    .welcome-section {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #1f1f1f, #3c3c3c);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-    }
-  </style>
+<div class="hero-section text-center">
+  <h1 class="display-3 fw-bold mb-4">🎶 Your Music Hub</h1>
+  <p class="lead text-muted mb-4 mx-auto" style="max-width: 600px;">
+    Discover, connect, and share in the vibrant world of music. 
+    Explore emerging artists, trending bands, and iconic venues.
+  </p>
+  <a href="{% url 'news' %}" class="btn btn-primary btn-lg px-5">
+    Explore Now <i class="bi bi-arrow-right ms-2"></i>
+  </a>
+</div>
+
+<style>
+  .hero-section {
+    padding: 6rem 1rem;
+    background: linear-gradient(45deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: 12px;
+  }
+</style>
 {% endblock %}

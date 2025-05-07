@@ -1,72 +1,75 @@
-<!-- templates/band_list.html -->
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Bands | RiffMates{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-  <div class="d-flex justify-content-between align-items-center bg-white p-4 shadow-sm rounded mb-4">
-    <h1 class="display-5 text-dark m-0">
-      <i class="bi bi-people-fill me-2"></i>All Bands
+<div class="bands-listing">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <h1 class="fw-bold mb-0">
+      <i class="bi bi-vinyl me-2"></i>Featured Bands
     </h1>
-    <a href="" class="btn btn-success">
-      <i class="bi bi-plus-circle me-1"></i> Add Band
+    <a href="#" class="btn btn-primary">
+      <i class="bi bi-plus-lg me-2"></i>Add Band
     </a>
   </div>
 
-  <div class="table-responsive">
-    <table class="table table-hover table-striped shadow-sm align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th>Band Name</th>
-          <th>Member Count</th>
-          <th class="text-center">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for band in bands %}
-        <tr>
-          <td>{{ band.name }}</td>
-          <td>{{ band.musicians.count }}</td>
-          <td class="text-center">
-            <a href="{% url 'band_detail' band.id %}" class="btn btn-sm btn-outline-primary">
-              <i class="bi bi-eye"></i> View
-            </a>
-          </td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="3" class="text-center py-4">
-            <div class="alert alert-warning mb-0">
-              <i class="bi bi-exclamation-triangle me-2"></i> No bands found.
+  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+    {% for band in bands %}
+    <div class="col">
+      <div class="band-card card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex align-items-start gap-3">
+            <div class="avatar-placeholder bg-light rounded-circle p-3">
+              <i class="bi bi-music-note-beamed fs-3 text-muted"></i>
             </div>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+            <div class="flex-grow-1">
+              <h5 class="mb-1">{{ band.name }}</h5>
+              <div class="text-muted small">
+                <i class="bi bi-people me-1"></i>
+                {{ band.musicians.count }} Members
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent border-0 pt-0">
+          <a 
+            href="{% url 'band_detail' band.id %}" 
+            class="btn btn-sm btn-outline-primary w-100"
+          >
+            View Details
+          </a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+      <div class="alert alert-warning">
+        <i class="bi bi-exclamation-circle me-2"></i>
+        No bands found in our database
+      </div>
+    </div>
+    {% endfor %}
   </div>
 
-  <!-- Pagination (same structure as musicians) -->
   {% if bands.paginator.num_pages > 1 %}
-  <nav aria-label="Page navigation">
+  <nav class="mt-4">
     <ul class="pagination justify-content-center">
       {% if bands.has_previous %}
       <li class="page-item">
-        <a class="page-link" href="?page={{ bands.previous_page_number }}&per_page={{ per_page }}" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
+        <a class="page-link" href="?page={{ bands.previous_page_number }}">
+          <i class="bi bi-chevron-left"></i>
         </a>
       </li>
       {% endif %}
       {% for num in bands.paginator.page_range %}
       <li class="page-item {% if num == bands.number %}active{% endif %}">
-        <a class="page-link" href="?page={{ num }}&per_page={{ per_page }}">{{ num }}</a>
+        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
       </li>
       {% endfor %}
       {% if bands.has_next %}
       <li class="page-item">
-        <a class="page-link" href="?page={{ bands.next_page_number }}&per_page={{ per_page }}" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
+        <a class="page-link" href="?page={{ bands.next_page_number }}">
+          <i class="bi bi-chevron-right"></i>
         </a>
       </li>
       {% endif %}

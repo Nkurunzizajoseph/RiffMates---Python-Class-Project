@@ -4,61 +4,60 @@
 {% block title %}{{ musician.first_name }} {{ musician.last_name }} | RiffMates{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="card shadow-lg border-0">
-        <!-- Header Section -->
-        <div class="bg-dark text-white text-center py-5 position-relative">
-            <h1 class="display-4 fw-bold mb-3">
-                {{ musician.first_name }} <span class="text-success">{{ musician.last_name }}</span>
-            </h1>
-            <div class="badge rounded-pill bg-success text-dark px-3 py-2 shadow-sm">
-                <i class="bi bi-balloon me-2"></i>
-                Born {{ musician.birth|date:"F j, Y" }}
-            </div>
+<div class="artist-profile">
+  <div class="header-card bg-primary text-white p-5 rounded-top">
+    <div class="d-flex align-items-end gap-4">
+      <div class="flex-grow-1">
+        <h1 class="display-5 fw-bold mb-2">
+          {{ musician.first_name }} <span class="text-light">{{ musician.last_name }}</span>
+        </h1>
+        <div class="d-flex gap-3 align-items-center">
+          <span class="badge bg-white text-primary rounded-pill px-3 py-2">
+            Born {{ musician.birth|date:"M j, Y" }}
+          </span>
+          <span class="text-light opacity-75">
+            <i class="bi bi-clock-history me-1"></i>
+            {{ musician.birth|timesince }} old
+          </span>
         </div>
-
-        <!-- Main Body -->
-        <div class="card-body">
-            <div class="row g-5">
-                <!-- Left Column -->
-                <div class="col-lg-8">
-                    <div class="mb-4">
-                        <div class="bg-dark text-white d-inline-block px-4 py-2 rounded shadow-sm">
-                            <i class="bi bi-clock-history me-2"></i>
-                            {{ musician.first_name }} is {{ musician.birth|timesince }} old
-                        </div>
-                    </div>
-
-                    <h3 class="mb-3 border-bottom pb-2">
-                        <i class="bi bi-journal-text me-2 text-primary"></i>
-                        Biography
-                    </h3>
-                    <p class="fst-italic text-muted lead">
-                        "{{ musician.bio|default:"A talented musician whose story is yet to be written..." }}"
-                    </p>
-                </div>
-
-                <!-- Right Column (Sidebar) -->
-                <div class="col-lg-4 text-center">
-                    <div class="mb-4">
-                        <div class="rounded-circle bg-light d-flex justify-content-center align-items-center mx-auto" style="width: 200px; height: 200px;">
-                            <i class="bi bi-person-gear text-secondary" style="font-size: 6rem;"></i>
-                        </div>
-                    </div>
-
-                    <div class="d-grid gap-3">
-                        <a href="{% url 'bands' %}" class="btn btn-outline-dark btn-lg py-2">
-                            <i class="bi bi-people me-2"></i>
-                            View All Bands
-                        </a>
-                        <a href="#" class="btn btn-success btn-lg py-2">
-                            <i class="bi bi-mic me-2"></i>
-                            View Performances
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="profile-body p-4">
+    <div class="row g-4">
+      <div class="col-lg-8">
+        <div class="bio-section">
+          <h3 class="fw-bold mb-3">Artist Profile</h3>
+          <p class="lead text-muted mb-0">
+            {{ musician.bio|default:"An accomplished artist shaping the sound of our generation..." }}
+          </p>
+        </div>
+      </div>
+      
+      <div class="col-lg-4">
+        <div class="action-card p-4 bg-light rounded">
+          <div class="d-grid gap-3">
+            <a href="{% url 'band_list' %}" class="btn btn-outline-dark">
+              <i class="bi bi-people me-2"></i> View Bands
+            </a>
+            <button class="btn btn-primary">
+              <i class="bi bi-mic me-2"></i> Performances
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<style>
+  .header-card {
+    margin: -2rem -2rem 2rem -2rem;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  }
+  .action-card {
+    border: 1px solid #e2e8f0;
+  }
+</style>
 {% endblock %}
